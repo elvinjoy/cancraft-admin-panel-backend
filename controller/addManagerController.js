@@ -6,7 +6,7 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.MANAGER_JWT_SECRET, { expiresIn: "3d" });
 };
 
-// Manager registration
+//  creating Manager 
 const managerRegister = async (req, res) => {
   const { name, email, password } = req.body;
   try {
