@@ -1,30 +1,9 @@
-const Manager = require('../models/managerModel');
-const jwt = require('jsonwebtoken');
+const Manager = require("../models/managerModel");
+const jwt = require("jsonwebtoken");
 
 // Create token
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.MANAGER_JWT_SECRET, { expiresIn: '3d' });
-};
-
-// Middleware to check if the user is an admin
-const checkAdmin = async (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res.status(403).json({ error: 'Not authorized, token missing' });
-  }
-
-  const token = req.headers.authorization.split(" ")[1];
-  try {
-    const decoded = jwt.verify(token, process.env.ADMIN_JWT_SECRET);
-    const admin = await Admin.findById(decoded._id);
-    if (admin && admin.status === 'admin') {
-      req.admin = admin;
-      next();
-    } else {
-      throw new Error('Not authorized');
-    }
-  } catch (error) {
-    res.status(403).json({ error: 'Not authorized' });
-  }
+  return jwt.sign({ _id }, process.env.MANAGER_JWT_SECRET, { expiresIn: "3d" });
 };
 
 // Manager registration
@@ -51,4 +30,4 @@ const managerLogin = async (req, res) => {
   }
 };
 
-module.exports = { managerRegister, managerLogin, checkAdmin };
+module.exports = { managerRegister, managerLogin };

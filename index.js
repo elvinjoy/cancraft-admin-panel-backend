@@ -18,16 +18,19 @@ app.get("/", (req, res) => {
   res.send("Welcome to cancraft admin panel backend!");
 });
 
+// Use environment variable for MongoDB URI
+const MONG_URI = process.env.MONG_URI;
+
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONG_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB connected");
+    mongoose
+      .connect(MONG_URI)
+      .then(() => console.log("Database Connected"))
+      .catch((err) => console.error("Database Connection Error:", err));
 
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is running on port ${process.env.PORT}`);
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
       console.log("admin panel backend server started");
     });
   } catch (err) {
