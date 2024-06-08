@@ -3,6 +3,7 @@ const Admin = require("../models/adminModel");
 const User = require("../models/userModel");
 const Manager = require('../models/managerModel');
 const jwt = require("jsonwebtoken");
+const Ratio = require('../models/ratioModel');
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.ADMIN_JWT_SECRET, { expiresIn: "3d" });
@@ -62,4 +63,28 @@ const getAllManagers = async (req, res) => {
   }
 };
 
-module.exports = { adminLogin, adminRegister, deleteManager, getAllManagers };
+// adding new size ratio
+const addButtonSizeRatio = async (req, res) => {
+  const { buttonSizeRatio, width, height } = req.body;
+  console.log(buttonSizeRatio, width, height);
+
+  try {
+      const newRatio = new Ratio({ buttonSizeRatio, width, height });
+      const savedRatio = await newRatio.save();
+      res.status(201).json(savedRatio);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+};
+
+// display all buttons
+const getAllButtonSizeRatios = async (req, res) => {
+  try {
+    const ratios = await Ratio.find();
+    res.status(200).json(ratios);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { adminLogin, adminRegister, deleteManager, getAllManagers, addButtonSizeRatio, getAllButtonSizeRatios };
