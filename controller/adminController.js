@@ -1,9 +1,9 @@
-require('dotenv').config();
+require("dotenv").config();
 const Admin = require("../models/adminModel");
 const User = require("../models/userModel");
-const Manager = require('../models/managerModel');
+const Manager = require("../models/managerModel");
 const jwt = require("jsonwebtoken");
-const Ratio = require('../models/ratioModel');
+const Ratio = require("../models/dimensionModel");
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.ADMIN_JWT_SECRET, { expiresIn: "3d" });
@@ -36,7 +36,6 @@ const adminLogin = async (req, res) => {
   }
 };
 
-
 // Restrict user from website
 const deleteManager = async (req, res) => {
   const managerId = req.params.id;
@@ -44,11 +43,11 @@ const deleteManager = async (req, res) => {
   try {
     const manager = await Manager.findByIdAndDelete(managerId);
     if (!manager) {
-      return res.status(404).json({ error: 'Manager not found' });
+      return res.status(404).json({ error: "Manager not found" });
     }
-    return res.status(200).json({ message: 'Manager deleted successfully' });
+    return res.status(200).json({ message: "Manager deleted successfully" });
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -69,11 +68,11 @@ const addButtonSizeRatio = async (req, res) => {
   console.log(buttonSizeRatio, width, height);
 
   try {
-      const newRatio = new Ratio({ buttonSizeRatio, width, height });
-      const savedRatio = await newRatio.save();
-      res.status(201).json(savedRatio);
+    const newRatio = new Ratio({ buttonSizeRatio, width, height });
+    const savedRatio = await newRatio.save();
+    res.status(201).json(savedRatio);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -87,7 +86,6 @@ const getAllButtonSizeRatios = async (req, res) => {
   }
 };
 
-
 // display particular buttons
 const getspecificButton = async (req, res) => {
   try {
@@ -98,6 +96,12 @@ const getspecificButton = async (req, res) => {
   }
 };
 
-
-
-module.exports = { adminLogin, adminRegister, deleteManager, getAllManagers, addButtonSizeRatio, getAllButtonSizeRatios, getspecificButton };
+module.exports = {
+  adminLogin,
+  adminRegister,
+  deleteManager,
+  getAllManagers,
+  addButtonSizeRatio,
+  getAllButtonSizeRatios,
+  getspecificButton,
+};
