@@ -5,6 +5,7 @@ const cors = require("cors");
 require("dotenv").config();
 const adminAuthRoutes = require("./routes/adminRoutes");
 const addManagerRoutes = require("./routes/addManagerRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(cors());
 
 app.use("/api/admin", adminAuthRoutes);
 app.use("/api/managers", addManagerRoutes);
+app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to cancraft admin panel backend!");

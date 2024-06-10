@@ -87,4 +87,17 @@ const getAllButtonSizeRatios = async (req, res) => {
   }
 };
 
-module.exports = { adminLogin, adminRegister, deleteManager, getAllManagers, addButtonSizeRatio, getAllButtonSizeRatios };
+
+// display particular buttons
+const getspecificButton = async (req, res) => {
+  try {
+    const ratios = await Ratio.findone();
+    res.status(200).json(ratios);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+module.exports = { adminLogin, adminRegister, deleteManager, getAllManagers, addButtonSizeRatio, getAllButtonSizeRatios, getspecificButton };

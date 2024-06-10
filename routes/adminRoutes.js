@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { adminLogin, adminRegister, deleteManager, getAllManagers, addButtonSizeRatio, getAllButtonSizeRatios } = require('../controller/adminController');
+const { adminLogin, adminRegister, deleteManager, getAllManagers, addButtonSizeRatio, getAllButtonSizeRatios, getspecificButton } = require('../controller/adminController');
 
 // Admin routes
 router.post('/register', adminRegister);
@@ -9,5 +9,7 @@ router.delete('/manager/:id', deleteManager);
 router.get('/allmanagers', getAllManagers);
 router.post('/addratios', addButtonSizeRatio);
 router.get('/allratios', getAllButtonSizeRatios);
+router.get('/onebutton/:id', getspecificButton);
 
 module.exports = router;
+ 
