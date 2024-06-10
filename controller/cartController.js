@@ -25,8 +25,9 @@ exports.addToCart = async (req, res) => {
 //getAll Cart
 exports.getAllCart = async (req, res) => {
   try {
-    const carts = await Cart.find();
-    res.status(200).json(carts);
+    const carts = await Cart.find({ userId: req.user._id });
+    console.log(req.user._id);
+    res.status(200).json({ carts });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

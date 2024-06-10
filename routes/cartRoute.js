@@ -3,8 +3,8 @@ const router = express.Router();
 const { addToCart, getAllCart } = require("../controller/cartController");
 const { requireCustomerAuth } = require("../middleware/requireUserAuth");
 
-router.get("/getallcart", getAllCart);
 router.use(requireCustomerAuth);
 router.post("/addtocart", addToCart);
+router.get("/getallcart", getAllCart);
 
 module.exports = router;

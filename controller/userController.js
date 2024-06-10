@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
-const Address = require('../models/addressmodel');
+const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
+const Address = require("../models/addressmodel");
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.USER_JWT_SECRET, { expiresIn: '3d' });
+  return jwt.sign({ _id }, process.env.USER_JWT_SECRET, { expiresIn: "3d" });
 };
 
 const userRegister = async (req, res) => {
@@ -11,7 +11,7 @@ const userRegister = async (req, res) => {
   try {
     const user = await User.userSignup(name, email, password);
     const token = createToken(user._id);
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, user });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -22,7 +22,7 @@ const userLogin = async (req, res) => {
   try {
     const user = await User.userLogin(email, password);
     const token = createToken(user._id);
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, user });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -37,10 +37,10 @@ const userAddress = async (req, res) => {
       name,
       streetAddress,
       phoneNumber,
-      pincode
+      pincode,
     };
 
-    console.log({ address }); 
+    console.log({ address });
     res.status(200).json({ address });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -56,7 +56,7 @@ const user = async (req, res) => {
     if (userdata && userdata._id && userdata.address) {
       return res.status(200).json(userdata);
     } else {
-      return res.status(400).json({ error: 'User ID or address missing' });
+      return res.status(400).json({ error: "User ID or address missing" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
