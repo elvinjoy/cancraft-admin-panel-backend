@@ -16,11 +16,23 @@ exports.createDimension = async (req, res) => {
 exports.getAllDimensions = async (req, res) => {
   try {
     const dimensions = await Dimension.find();
-    // Combine all dimensions into a single object
-    const combinedDimensions = dimensions.reduce((acc, dimension) => {
-      return { ...acc, ...dimension.dimensions };
-    }, {});
-    res.status(200).json(combinedDimensions);
+    // Map the dimensions to include the _id
+    const dimensionsWithId = dimensions.map(dimension => ({
+      _id: dimension._id,
+      dimensions: dimension.dimensions
+    }));
+    res.status(200).json(dimensionsWithId);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Delete a dimension by ID
+exports.deleteDimension = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Dimension.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Dimension deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
