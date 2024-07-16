@@ -4,6 +4,7 @@ const dimensionController = require("../controller/dimensionController");
 
 router.post("/dimensions", dimensionController.createDimension);
 router.get("/dimensions", dimensionController.getAllDimensions);
-router.delete("/dimensions/:id", dimensionController.deleteDimension); // Add this line
+router.get("alldimensions", dimensionController.sentAllDimensions);
+router.delete("/dimensions/:id", dimensionController.deleteDimension); 
 
 module.exports = router;

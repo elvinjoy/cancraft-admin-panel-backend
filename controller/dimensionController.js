@@ -16,6 +16,19 @@ exports.createDimension = async (req, res) => {
 exports.getAllDimensions = async (req, res) => {
   try {
     const dimensions = await Dimension.find();
+    const combinedDimensions = dimensions.reduce((acc, dimension) => {
+      return { ...acc, ...dimension.dimensions };
+    }, {});
+    res.status(200).json(combinedDimensions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// sent all dimensions to admin panel
+exports.sentAllDimensions = async (req, res) => {
+  try {
+    const dimensions = await Dimension.find();
     // Map the dimensions to include the _id
     const dimensionsWithId = dimensions.map(dimension => ({
       _id: dimension._id,
