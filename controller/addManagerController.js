@@ -24,10 +24,10 @@ const managerLogin = async (req, res) => {
   try {
     const manager = await Manager.managerLogin(email, password);
     const token = createToken(manager._id);
-    res.status(200).json({ email, token });
+    res.status(200).json({ manager, token });
   } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+    res.status(400).json({ error: error.message });
+  }
 };
 
 module.exports = { managerRegister, managerLogin };
