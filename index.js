@@ -8,6 +8,7 @@ const addManagerRoutes = require("./routes/addManagerRoutes");
 const userRoutes = require("./routes/userRoutes");
 const dimensionRoutes = require("./routes/dimensionRoutes");
 const cartRoutes = require("./routes/cartRoute");
+const PriceRoutes = require("./routes/priceRoutes");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/api/managers", addManagerRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/dimensions", dimensionRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/price", PriceRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to cancraft admin panel backend!");
